@@ -8,3 +8,7 @@
 
 (define sq (lambda (x) (* x x)))
 
+(define mag
+  (lambda (x y z)
+    (sqrt (+ (sq x) (sq y) (sq z)))))
+
