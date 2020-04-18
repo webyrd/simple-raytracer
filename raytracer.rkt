@@ -12,3 +12,7 @@
   (lambda (x y z)
     (sqrt (+ (sq x) (sq y) (sq z)))))
 
+(define unit-vector
+  (lambda (x y z)
+    (let ((d (mag x y z)))
+      (values (/ x d) (/ y d) (/ z d)))))
