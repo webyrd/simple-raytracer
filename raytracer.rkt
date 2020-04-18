@@ -16,3 +16,12 @@
   (lambda (x y z)
     (let ((d (mag x y z)))
       (values (/ x d) (/ y d) (/ z d)))))
+
+(struct point (x y z))
+
+(define distance
+  (lambda (p1 p2)
+    (mag (- (point-x p1) (point-x p2))
+         (- (point-y p1) (point-y p2))
+         (- (point-z p1) (point-z p2)))))
+
