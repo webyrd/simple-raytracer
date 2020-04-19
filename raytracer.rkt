@@ -47,19 +47,27 @@
 
 (define eye (point 0 0 200))
 
+(define window-min-x -50)
+(define window-max-x 50)
+
+(define window-min-y -50)
+(define window-max-y 50)
+
+(define max-color-val 255)
+
 (define tracer
   (lambda (pathname . args)
     (let ((res (if (null? args)
                    1
-                   (first args))))
+                   (first args))))      
       (with-output-to-file pathname
         (lambda ()
-          (printf "P2\n~s ~s\n~s\n" (* res 100) (* res 100) 255)
+          (printf "P2\n~s ~s\n~s\n" (* res 100) (* res 100) max-color-val)
           (let ((inc (exact->inexact (/ res))))
-            (do ((y -50 (+ y inc)))
-                ((< (- 50 y) inc))
-              (do ((x -50 (+ x inc)))
-                  ((< (- 50 x) inc))
+            (do ((y window-min-y (+ y inc)))
+                ((< (- window-max-y y) inc))
+              (do ((x window-min-x (+ x inc)))
+                  ((< (- window-max-x x) inc))
                 (displayln (color-at x y))))))
         #:mode 'text
         #:exists 'replace))))
