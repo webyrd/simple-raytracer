@@ -59,18 +59,28 @@
   (lambda (pathname . args)
     (let ((res (if (null? args)
                    1
-                   (first args))))      
-      (with-output-to-file pathname
-        (lambda ()
-          (printf "P2\n~s ~s\n~s\n" (* res 100) (* res 100) max-color-val)
-          (let ((inc (exact->inexact (/ res))))
-            (do ((y window-min-y (+ y inc)))
-                ((< (- window-max-y y) inc))
-              (do ((x window-min-x (+ x inc)))
-                  ((< (- window-max-x x) inc))
-                (displayln (color-at x y))))))
-        #:mode 'text
-        #:exists 'replace))))
+                   (first args))))
+      (let ((inc (exact->inexact (/ res))))
+        (let ((hor-pixels 0) (vert-pixels 0))
+          ;; Yucky code to calculate exact number of horizontal and
+          ;; vertical pixels in the resulting image.
+          (do ((y window-min-y (+ y inc)))
+              ((< (- window-max-y y) inc))
+            (set! hor-pixels 0)
+            (do ((x window-min-x (+ x inc)))
+                ((< (- window-max-x x) inc))
+              (set! hor-pixels (add1 hor-pixels)))
+            (set! vert-pixels (add1 vert-pixels)))
+          (with-output-to-file pathname
+            (lambda ()
+              (printf "P2\n~s ~s\n~s\n" hor-pixels vert-pixels max-color-val)
+              (do ((y window-min-y (+ y inc)))
+                  ((< (- window-max-y y) inc))
+                (do ((x window-min-x (+ x inc)))
+                    ((< (- window-max-x x) inc))
+                  (displayln (color-at x y)))))
+            #:mode 'text
+            #:exists 'replace))))))
 
 (define color-at
   (lambda (x y)
