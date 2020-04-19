@@ -69,9 +69,7 @@
     (let-values (((xr yr zr) (unit-vector (- x (point-x eye))
                                           (- y (point-y eye))
                                           (- 0 (point-z eye)))))
-      (let ((intensity (inexact->exact (round (* (sendray eye xr yr zr) 255)))))
-        ;; (printf "color-at ~s ~s: ~s\n" x y intensity)
-        intensity))))
+      (inexact->exact (round (* (sendray eye xr yr zr) 255))))))
 
 (define sendray
   (lambda (pt xr yr zr)
@@ -97,10 +95,8 @@
 
 (define lambert
   (lambda (s intersection-pt xr yr zr)
-    (let-values (((xn yn zn) (normal s intersection-pt)))      
-      (let ((intensity (max 0 (+ (* xr xn) (* yr yn) (* zr zn)))))
-        ;; (printf "lambert ~s ~s ~s: ~s\n" xr yr zr intensity)
-        intensity))))
+    (let-values (((xn yn zn) (normal s intersection-pt)))
+      (max 0 (+ (* xr xn) (* yr yn) (* zr zn))))))
 
 ;; Code from figure 9.5 on page 156
 
