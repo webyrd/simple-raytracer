@@ -54,7 +54,7 @@
                    (first args))))
       (with-output-to-file pathname
         (lambda ()
-          (printf "P2\n~s ~s\n" (* res 100) (* res 100))
+          (printf "P2\n~s ~s\n~s\n" (* res 100) (* res 100) 255)
           (let ((inc (exact->inexact (/ res))))
             (do ((y -50 (+ y inc)))
                 ((< (- 50 y) inc))
