@@ -34,13 +34,6 @@
               (error 'minroot
                      (format "disc is negative: ~s" disc))
               (let ((discrt (sqrt disc)))
-                ;; ?? The description of minroot on page 151 says that
-                ;; it returns the "smallest real 'x' for which 'ax^2 +
-                ;; bx + c = 0'".  Does "smallest" mean "closest to
-                ;; negative infinity (in which case the code in the
-                ;; book is correct), or "whose absolute value is
-                ;; closest to 0" (in which case the code in
-                ;; incorrect)?  (No errata reported at
-                ;; http://www.paulgraham.com/ancomliser.html)
                 (min (/ (+ (- b) discrt) (* 2 a))
                      (/ (- (- b) discrt) (* 2 a)))))))))
+
